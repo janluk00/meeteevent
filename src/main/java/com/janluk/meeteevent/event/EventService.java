@@ -1,7 +1,5 @@
 package com.janluk.meeteevent.event;
 
-import com.janluk.meeteevent.place.Place;
-import com.janluk.meeteevent.place.PlaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
