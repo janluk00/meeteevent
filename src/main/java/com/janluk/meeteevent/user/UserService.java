@@ -39,7 +39,9 @@ public class UserService {
                         user.getEmail(),
                         user.getPassword(),
                         user.getPhone(),
-                        user.getCity()
+                        user.getCity(),
+                        user.getName(),
+                        user.getSurname()
                 )
         );
     }

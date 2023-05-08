@@ -32,11 +32,19 @@ public class User {
     @Column(name = "city")
     private String city;
 
-    public User(String login, String email, String password, String phone, String city) {
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
+    public User(String login, String email, String password, String phone, String city, String name, String surname) {
         this.login = login;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.city = city;
+        this.name = name;
+        this.surname = surname;
     }
 }
