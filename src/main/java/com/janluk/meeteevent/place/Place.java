@@ -1,8 +1,6 @@
 package com.janluk.meeteevent.place;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +12,8 @@ import java.util.UUID;
 @Table(name = "place")
 public class Place {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
