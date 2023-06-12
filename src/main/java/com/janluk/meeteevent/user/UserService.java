@@ -2,7 +2,10 @@ package com.janluk.meeteevent.user;
 
 import com.janluk.meeteevent.user.dto.UserDTO;
 import com.janluk.meeteevent.user.dto.UserRegisterRequest;
-import org.modelmapper.ModelMapper;
+import com.janluk.meeteevent.user.exception.LoginAlreadyTaken;
+import com.janluk.meeteevent.user.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,18 +17,19 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    @Autowired
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
+        this.userMapper = userMapper;
     }
 
     public List<UserDTO> fetchAllUsers(){
         List<User> users = userRepository.findAll();
         return users.stream()
                 .filter(Objects::nonNull)
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(userMapper::toUserDto)
                 .collect(Collectors.toList());
     }
 
@@ -33,25 +37,24 @@ public class UserService {
         return userRepository.findUserByLogin(login);
     }
 
-    public void createUser(UserRegisterRequest user){
-        userRepository.save(
-                new User(user.getLogin(),
-                        user.getEmail(),
-                        user.getPassword(),
-                        user.getPhone(),
-                        user.getCity(),
-                        user.getName(),
-                        user.getSurname()
-                )
-        );
+    public void createUser(UserRegisterRequest user) {
+        if (isLoginAlreadyTaken(user.login())){
+            throw new LoginAlreadyTaken("Login: " + user.login() + "already taken!");
+        }
+
+        if (isEmailAlreadyTaken(user.email())){
+            throw new LoginAlreadyTaken("E-mail: " + user.email() + "already taken!");
+        }
+
+        userRepository.save(userMapper.toUser(user));
     }
 
-    public boolean isLoginAlreadyTaken(String login){
+    public boolean isLoginAlreadyTaken(String login) {
         Optional<User> optionalUser = userRepository.findUserByLogin(login);
         return optionalUser.isPresent();
     }
 
-    public boolean isEmailAlreadyTaken(String email){
+    public boolean isEmailAlreadyTaken(String email) {
         Optional<User> optionalUser = userRepository.findUserByEmail(email);
         return optionalUser.isPresent();
     }
