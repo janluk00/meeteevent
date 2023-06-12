@@ -5,7 +5,6 @@ import com.janluk.meeteevent.user.dto.UserRegisterRequest;
 import com.janluk.meeteevent.user.exception.LoginAlreadyTaken;
 import com.janluk.meeteevent.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public List<UserDTO> fetchAllUsers(){
+    public List<UserDTO> fetchAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
                 .filter(Objects::nonNull)

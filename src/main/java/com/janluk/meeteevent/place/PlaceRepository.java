@@ -8,5 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, UUID> {
+
     Optional<Place> findPlaceById(UUID id);
 }
