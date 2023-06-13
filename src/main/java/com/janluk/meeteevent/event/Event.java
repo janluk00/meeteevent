@@ -1,5 +1,6 @@
 package com.janluk.meeteevent.event;
 
+import com.janluk.meeteevent.place.Place;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,14 +28,13 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    // TODO: Add relationship
-    @Column(name = "place_id")
-    private UUID placeId;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id", name = "place_id")
+    private Place place;
 
-    public Event(String name, Date date, String description, UUID placeId) {
+    public Event(String name, Date date, String description) {
         this.name = name;
         this.date = date;
         this.description = description;
-        this.placeId = placeId;
     }
 }
