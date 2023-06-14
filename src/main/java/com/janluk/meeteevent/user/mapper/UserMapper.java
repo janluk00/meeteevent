@@ -1,7 +1,5 @@
-package com.janluk.meeteevent.user;
+package com.janluk.meeteevent.user.mapper;
 
-import com.janluk.meeteevent.mapper.EncodedMapping;
-import com.janluk.meeteevent.mapper.PasswordEncoderMapper;
 import com.janluk.meeteevent.user.User;
 import com.janluk.meeteevent.user.dto.UserDTO;
 import com.janluk.meeteevent.user.dto.UserRegisterRequest;
