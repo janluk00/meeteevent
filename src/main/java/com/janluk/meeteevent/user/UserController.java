@@ -2,6 +2,7 @@ package com.janluk.meeteevent.user;
 
 import com.janluk.meeteevent.user.dto.UserDTO;
 import com.janluk.meeteevent.user.dto.UserRegisterRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserRegisterRequest> registerUser(@RequestBody UserRegisterRequest newUser) {
+    public ResponseEntity<UserRegisterRequest> registerUser(@Valid @RequestBody UserRegisterRequest newUser) {
         userService.createUser(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
