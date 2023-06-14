@@ -1,4 +1,4 @@
-package com.janluk.meeteevent.user.mapper;
+package com.janluk.meeteevent.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

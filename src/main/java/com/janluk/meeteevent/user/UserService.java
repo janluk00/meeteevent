@@ -3,7 +3,6 @@ package com.janluk.meeteevent.user;
 import com.janluk.meeteevent.user.dto.UserDTO;
 import com.janluk.meeteevent.user.dto.UserRegisterRequest;
 import com.janluk.meeteevent.user.exception.LoginAlreadyTaken;
-import com.janluk.meeteevent.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

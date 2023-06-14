@@ -1,4 +1,4 @@
-package com.janluk.meeteevent.user.mapper;
+package com.janluk.meeteevent.mapper;
 
 import org.mapstruct.Qualifier;
 
