@@ -6,22 +6,19 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SecurityUser implements UserDetails {
 
     private final User user;
-    private final UUID id;
 
     public SecurityUser(User user) {
         System.out.println("SecurityUser/SecurityUser");
         this.user = user;
-        this.id = user.getId();
     }
 
-    public UUID getId() {
-        return user.getId();
+    public User getUser() {
+        return user;
     }
 
     @Override
