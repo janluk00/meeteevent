@@ -3,12 +3,14 @@ package com.janluk.meeteevent.user;
 import com.janluk.meeteevent.user.dto.UserDTO;
 import com.janluk.meeteevent.user.dto.UserRegisterRequest;
 import com.janluk.meeteevent.user.exception.LoginAlreadyTaken;
+import com.janluk.meeteevent.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +46,9 @@ public class UserService {
             throw new LoginAlreadyTaken("E-mail: " + user.email() + "already taken!");
         }
 
-        userRepository.save(userMapper.toUser(user));
+        User saveUser = userMapper.toUser(user);
+        saveUser.setRoles(Set.of(Role.ROLE_USER));
+        userRepository.save(saveUser);
     }
 
     public boolean isLoginAlreadyTaken(String login) {
