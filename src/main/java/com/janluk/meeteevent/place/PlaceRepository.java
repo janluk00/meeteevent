@@ -1,13 +1,11 @@
 package com.janluk.meeteevent.place;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.janluk.meeteevent.utils.base.BaseEntityRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PlaceRepository extends JpaRepository<Place, UUID> {
+public interface PlaceRepository extends BaseEntityRepository<Place, UUID> {
 
-    Optional<Place> findPlaceById(UUID id);
 }
