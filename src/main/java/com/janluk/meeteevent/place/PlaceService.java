@@ -19,7 +19,7 @@ public class PlaceService {
         return placeRepository.findAll();
     }
 
-    public Optional<Place> fetchPlaceById(UUID id) {
-        return placeRepository.findPlaceById(id);
+    public Place fetchPlaceById(UUID id) {
+        return placeRepository.findByIdOrThrow(id);
     }
 }

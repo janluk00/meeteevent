@@ -1,21 +1,19 @@
 package com.janluk.meeteevent.place;
 
+import com.janluk.meeteevent.utils.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "place")
-public class Place {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
+public class Place extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -23,8 +21,13 @@ public class Place {
     @Column(name = "address", nullable = false)
     private String address;
 
-    public Place(String name, String address) {
-        this.name = name;
-        this.address = address;
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
