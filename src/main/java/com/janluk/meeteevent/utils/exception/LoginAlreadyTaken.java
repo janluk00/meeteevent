@@ -1,4 +1,4 @@
-package com.janluk.meeteevent.user.exception;
+package com.janluk.meeteevent.utils.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
