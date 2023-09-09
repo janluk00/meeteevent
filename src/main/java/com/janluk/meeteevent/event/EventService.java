@@ -1,9 +1,17 @@
 package com.janluk.meeteevent.event;
 
+import com.janluk.meeteevent.event.dto.EventCreateRequest;
 import com.janluk.meeteevent.event.dto.EventDTO;
 import com.janluk.meeteevent.event.mapper.EventMapper;
+import com.janluk.meeteevent.place.Place;
+import com.janluk.meeteevent.place.PlaceService;
+import com.janluk.meeteevent.user.User;
+import com.janluk.meeteevent.user.UserRepository;
+import com.janluk.meeteevent.utils.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,11 +22,13 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
+    private final PlaceService placeService;
 
     @Autowired
-    public EventService(EventRepository eventRepository, EventMapper eventMapper) {
+    public EventService(EventRepository eventRepository, EventMapper eventMapper, PlaceService placeService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.placeService = placeService;
     }
 
     public List<EventDTO> fetchAllEvents() {
@@ -29,6 +39,16 @@ public class EventService {
     }
 
     public Event fetchEventById(UUID id) {
-        return eventRepository.findByIdOrThrow(id);
+        return eventRepository.fetchById(id)
+                .orElseThrow(() -> new ResourceNotFound("Event with id: " + id + " not found"));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public UUID createEvent(EventCreateRequest request) {
+        Event event = eventMapper.toEvent(request);
+
+        eventRepository.save(event);
+
+        return event.getId();
     }
 }

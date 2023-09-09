@@ -16,6 +16,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
+@ToString
 public class User extends BaseEntity {
 
     @Column(name = "login", nullable = false)

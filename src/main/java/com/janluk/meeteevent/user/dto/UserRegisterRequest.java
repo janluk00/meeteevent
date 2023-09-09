@@ -39,7 +39,6 @@ public record UserRegisterRequest (
         String city,
 
         @NotBlank(message = "Name is required")
-        @Pattern(regexp = "^[\\w.\\-, ']*$")
         @Size(
                 min = 2,
                 max = 20,
@@ -48,7 +47,6 @@ public record UserRegisterRequest (
         String name,
 
         @NotBlank(message = "Surname is required")
-        @Pattern(regexp = "^[\\w.\\-, ']*$")
         @Size(
                 min = 2,
                 max = 20,
