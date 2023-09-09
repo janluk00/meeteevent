@@ -13,6 +13,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "place")
+@ToString
 public class Place extends BaseEntity {
 
     @Column(name = "name", nullable = false)

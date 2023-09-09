@@ -10,6 +10,9 @@ public interface UserMapper {
 
     UserDTO toUserDto(User user);
 
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "events", ignore = true)
+    @Mapping(target = "ownedEvents", ignore = true)
     @Mapping(target = "password", qualifiedBy = EncodedMapping.class)
     User toUser (UserRegisterRequest userRegisterRequest);
 }
