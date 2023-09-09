@@ -10,6 +10,7 @@ import com.janluk.meeteevent.user.mapper.UserMapper;
 import com.janluk.meeteevent.utils.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -59,14 +60,18 @@ public class UserService {
         userRepository.save(saveUser);
     }
 
+    @Transactional
     public void assignUserToEvent(UUID userId, UUID eventId) {
         User user = userRepository.fetchById(userId)
                 .orElseThrow(() -> new ResourceNotFound("User with id: " + userId + " not found"));
+
+        // TODO: ADD EXCEPTION ALREADY ASSIGNED
 
         Event event = eventRepository.fetchById(eventId)
                 .orElseThrow(() -> new ResourceNotFound("Event with id: " + eventId + " not found"));
 
         event.addUser(user);
+        eventRepository.save(event);
     }
 
     public boolean isLoginAlreadyTaken(String login) {
@@ -77,5 +82,11 @@ public class UserService {
     public boolean isEmailAlreadyTaken(String email) {
         Optional<User> optionalUser = userRepository.findUserByEmail(email);
         return optionalUser.isPresent();
+    }
+
+    public List<UserDTO> fetchAllUsersByEventId(UUID eventId) {
+        List<User> users = userRepository.findAllUsersByEventId(eventId);
+
+        return userMapper.toUserDtos(users);
     }
 }

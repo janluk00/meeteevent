@@ -17,7 +17,6 @@ public interface EventMapper {
 
     @AfterMapping
     default void addUserToEvent(@MappingTarget Event event) {
-        System.out.println("Zrobilem sie!");
         event.addUser(event.getCreatedBy());
     }
 
