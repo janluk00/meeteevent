@@ -47,7 +47,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
-    @PostMapping(value = "/{id}/xd/{event_id}", produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}/assign/event/{event_id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> assignUserToEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
         userService.assignUserToEvent(id, eventId);
 
