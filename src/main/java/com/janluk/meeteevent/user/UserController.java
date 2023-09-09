@@ -35,6 +35,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.fetchUserById(id));
     }
 
+    @GetMapping(value = "/event/{event_id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserDTO>> getAllUsersByEventId(@PathVariable("event_id") UUID eventId) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.fetchAllUsersByEventId(eventId));
+    }
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<UserRegisterRequest> registerUser(@Valid @RequestBody UserRegisterRequest newUser) {
@@ -43,12 +47,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
-    @PostMapping(value = "/{id}/event/{event_id}", produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}/xd/{event_id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> assignUserToEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
         userService.assignUserToEvent(id, eventId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(eventId.toString());
     }
-
 
 }
