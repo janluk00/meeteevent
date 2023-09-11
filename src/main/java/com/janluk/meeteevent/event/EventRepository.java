@@ -16,4 +16,10 @@ public interface EventRepository extends BaseEntityRepository<Event, UUID> {
             nativeQuery = true
     )
     List<Event> findAllEventsByUserId(UUID userId);
+
+    @Query(
+            value = "select event.* from event where event.created_by = ?1",
+            nativeQuery = true
+    )
+    List<Event> getAllEventsCreatedByUserById(UUID userId);
 }
