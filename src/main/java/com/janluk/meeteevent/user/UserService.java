@@ -63,6 +63,12 @@ public class UserService {
         userRepository.save(saveUser);
     }
 
+    public List<UserDTO> fetchAllUsersByEventId(UUID eventId) {
+        List<User> users = userRepository.findAllUsersByEventId(eventId);
+
+        return userMapper.toUserDtos(users);
+    }
+
     @Transactional
     public void assignUserToEvent(UUID userId, UUID eventId) {
         User user = userRepository.fetchById(userId)
@@ -85,11 +91,5 @@ public class UserService {
     public boolean isEmailAlreadyTaken(String email) {
         Optional<User> optionalUser = userRepository.findUserByEmail(email);
         return optionalUser.isPresent();
-    }
-
-    public List<UserDTO> fetchAllUsersByEventId(UUID eventId) {
-        List<User> users = userRepository.findAllUsersByEventId(eventId);
-
-        return userMapper.toUserDtos(users);
     }
 }
