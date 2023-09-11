@@ -6,12 +6,13 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @NoRepositoryBean
 public interface BaseEntityRepository<T, ID> extends JpaRepository<T, ID> {
 
-    default T findByIdOrThrow(ID id) {
-        return this.findById(id).orElseThrow(() -> new ResourceNotFound("Entity with " + id + " not found!"));
+    default Optional<T> fetchById(ID id) {
+        return this.findById(id);
     }
 
     default List<T> findAllList() {

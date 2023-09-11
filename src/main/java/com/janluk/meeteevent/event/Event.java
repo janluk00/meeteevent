@@ -13,9 +13,9 @@ import java.util.*;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "event")
+@ToString
 public class Event extends BaseEntity {
 
     @Column(name = "name", nullable = false)
@@ -27,7 +27,7 @@ public class Event extends BaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id", name = "place_id")
     private Place place;
 
@@ -38,12 +38,17 @@ public class Event extends BaseEntity {
 
     @ManyToMany(mappedBy = "events")
     @JsonBackReference
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     public Event(String name, Date date, String description) {
         this.name = name;
         this.date = date;
         this.description = description;
+    }
+
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getEvents().add(this);
     }
 
     @Override

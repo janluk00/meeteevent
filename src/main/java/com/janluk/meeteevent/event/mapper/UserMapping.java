@@ -1,4 +1,4 @@
-package com.janluk.meeteevent.user.mapper;
+package com.janluk.meeteevent.event.mapper;
 
 import org.mapstruct.Qualifier;
 
@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Qualifier
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.CLASS)
-public @interface EncodedMapping {
+public @interface UserMapping {
 }
