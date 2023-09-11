@@ -8,6 +8,7 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", uses = OptionalUserMapper.class)
 public interface EventMapper {
+
     EventDTO toEventDTO(Event event);
 
 

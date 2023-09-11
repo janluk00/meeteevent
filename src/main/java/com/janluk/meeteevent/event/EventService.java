@@ -36,9 +36,11 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public Event fetchEventById(UUID id) {
-        return eventRepository.fetchById(id)
+    public EventDTO fetchEventById(UUID id) {
+        Event event = eventRepository.fetchById(id)
                 .orElseThrow(() -> new ResourceNotFound("Event with id: " + id + " not found"));
+
+        return eventMapper.toEventDTO(event);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
