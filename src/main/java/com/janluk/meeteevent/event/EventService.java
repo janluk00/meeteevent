@@ -51,6 +51,14 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
+    public List<EventDTO> fetchAllEventsCreatedByUserById(UUID userId) {
+        List<Event> events = eventRepository.getAllEventsCreatedByUserById(userId);
+
+        return events.stream()
+                .map(eventMapper::toEventDTO)
+                .collect(Collectors.toList());
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public UUID createEvent(EventCreateRequest request) {
         Event event = eventMapper.toEvent(request);
