@@ -26,18 +26,23 @@ public class UserController {
 
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.fetchAllUsers());
+        List<UserDTO> users = userService.fetchAllUsers();
+
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
-    // test method
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.fetchUserById(id));
+    public ResponseEntity<UserDTO> getUserById(@PathVariable UUID id) {
+        UserDTO user = userService.fetchUserById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @GetMapping(value = "/event/{event_id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserDTO>> getAllUsersByEventId(@PathVariable("event_id") UUID eventId) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.fetchAllUsersByEventId(eventId));
+        List<UserDTO> users = userService.fetchAllUsersByEventId(eventId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)

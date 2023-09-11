@@ -40,9 +40,12 @@ public class UserService {
         return userRepository.findUserByLogin(login);
     }
 
-    public User fetchUserById(UUID id){
-        return userRepository.fetchById(id)
+    public UserDTO fetchUserById(UUID id){
+        User user = userRepository.fetchById(id)
                 .orElseThrow(() -> new ResourceNotFound("User with id: " + id + " not found"));
+
+        return userMapper.toUserDto(user);
+
     }
 
     public void createUser(UserRegisterRequest user) {
