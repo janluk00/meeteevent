@@ -15,7 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
+@Table(name = "meeteevent_user")
 @ToString
 public class User extends BaseEntity {
 
