@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ApplicationExceptionHandler {
 
     @ExceptionHandler(ResourceNotFound.class)
-    public ResponseEntity<ExceptionAPI> handleException(ResourceNotFound rnf) {
+    public ResponseEntity<ExceptionAPI> handleResourceNotFoundException(ResourceNotFound rnf) {
         return new ResponseEntity<>(
                 new ExceptionAPI(
                         HttpStatus.NOT_FOUND.value(),
@@ -20,5 +20,27 @@ public class ApplicationExceptionHandler {
         );
     }
 
-    // TODO: HANDLE MORE EXCEPTIONS
+    @ExceptionHandler(EmailAlreadyTaken.class)
+    public ResponseEntity<ExceptionAPI> handleEmailAlreadyTaken(EmailAlreadyTaken eat) {
+        return new ResponseEntity<>(
+                new ExceptionAPI(
+                        HttpStatus.BAD_REQUEST.value(),
+                        HttpStatus.BAD_REQUEST,
+                        eat.getLocalizedMessage()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(LoginAlreadyTaken.class)
+    public ResponseEntity<ExceptionAPI> handleLoginAlreadyTaken(LoginAlreadyTaken lat) {
+        return new ResponseEntity<>(
+                new ExceptionAPI(
+                        HttpStatus.BAD_REQUEST.value(),
+                        HttpStatus.BAD_REQUEST,
+                        lat.getLocalizedMessage()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
 }

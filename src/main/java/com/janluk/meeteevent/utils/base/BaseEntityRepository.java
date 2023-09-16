@@ -1,6 +1,5 @@
 package com.janluk.meeteevent.utils.base;
 
-import com.janluk.meeteevent.utils.exception.ResourceNotFound;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
