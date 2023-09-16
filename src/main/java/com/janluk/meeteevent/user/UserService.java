@@ -50,11 +50,11 @@ public class UserService {
 
     public void createUser(UserRegisterRequest user) {
         if (isLoginAlreadyTaken(user.login())){
-            throw new LoginAlreadyTaken("Login: " + user.login() + "already taken!");
+            throw new LoginAlreadyTaken("Login: " + user.login() + " already taken!");
         }
 
         if (isEmailAlreadyTaken(user.email())){
-            throw new EmailAlreadyTaken("E-mail: " + user.email() + "already taken!");
+            throw new EmailAlreadyTaken("E-mail: " + user.email() + " already taken!");
         }
 
         User saveUser = userMapper.toUser(user);
