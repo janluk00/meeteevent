@@ -2,11 +2,8 @@ package com.janluk.meeteevent.event;
 
 import com.janluk.meeteevent.event.dto.EventCreateRequest;
 import com.janluk.meeteevent.event.dto.EventDTO;
+import com.janluk.meeteevent.event.dto.EventWithUsersDTO;
 import com.janluk.meeteevent.event.mapper.EventMapper;
-import com.janluk.meeteevent.place.Place;
-import com.janluk.meeteevent.place.PlaceService;
-import com.janluk.meeteevent.user.User;
-import com.janluk.meeteevent.user.UserRepository;
 import com.janluk.meeteevent.utils.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,14 +33,14 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public EventDTO fetchEventById(UUID id) {
+    public EventWithUsersDTO fetchEventById(UUID id) {
         Event event = eventRepository.fetchById(id)
                 .orElseThrow(() -> new ResourceNotFound("Event with id: " + id + " not found"));
 
-        return eventMapper.toEventDTO(event);
+        return eventMapper.toEventWithUsersDTO(event);
     }
 
-    public List<EventDTO> fetchAlLEventsByUserId(UUID userId) {
+    public List<EventDTO> fetchAllEventsByUserId(UUID userId) {
         List<Event> events = eventRepository.findAllEventsByUserId(userId);
 
         return events.stream()
@@ -53,6 +50,14 @@ public class EventService {
 
     public List<EventDTO> fetchAllEventsCreatedByUserById(UUID userId) {
         List<Event> events = eventRepository.getAllEventsCreatedByUserById(userId);
+
+        return events.stream()
+                .map(eventMapper::toEventDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<EventDTO> fetchAllUnassignedEventByUserId(UUID userId) {
+        List<Event> events = eventRepository.getAllUnassignedEventsByUserId(userId);
 
         return events.stream()
                 .map(eventMapper::toEventDTO)
