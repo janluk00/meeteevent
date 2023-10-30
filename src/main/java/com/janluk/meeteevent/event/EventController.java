@@ -26,7 +26,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    // @PreAuthorize("hasAnyAuthority('SCOPE_USER', 'SCOPE_ADMIN')")
     @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EventDTO>> getAllEvents() {
         List<EventDTO> events = eventService.fetchAllEvents();

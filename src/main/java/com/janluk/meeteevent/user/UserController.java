@@ -18,7 +18,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    public final UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
