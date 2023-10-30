@@ -1,7 +1,9 @@
 package com.janluk.meeteevent.event;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.janluk.meeteevent.place.Place;
+import com.janluk.meeteevent.tag.Tag;
 import com.janluk.meeteevent.user.User;
 import com.janluk.meeteevent.utils.base.BaseEntity;
 import jakarta.persistence.*;
@@ -40,6 +42,15 @@ public class Event extends BaseEntity {
     @JsonBackReference
     private Set<User> users = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "event_tag",
+            joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    )
+    @JsonManagedReference
+    private Set<Tag> tags;
+
     public Event(String name, Date date, String description) {
         this.name = name;
         this.date = date;
@@ -49,6 +60,16 @@ public class Event extends BaseEntity {
     public void addUser(User user) {
         this.users.add(user);
         user.getEvents().add(this);
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+        tags.forEach(tag -> tag.getEvents().add(this));
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getEvents().add(this);
     }
 
     @Override

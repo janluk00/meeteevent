@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public record EventCreateRequest(
@@ -21,11 +22,12 @@ public record EventCreateRequest(
         Date date,
         @Size(
                 max = 255,
-                message = "The name should be between 2 and 48 characters long"
+                message = "The description cannot be longer than 255 characters"
         )
         String description,
         @NotNull
         PlaceCreateRequest place,
         @NotNull
-        UUID createdBy
+        UUID createdBy,
+        List<UUID> tags
 ) {}
