@@ -5,10 +5,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -28,5 +27,12 @@ public class TagController {
         tagService.createTag(newTag);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(newTag);
+    }
+
+    @PostMapping(value = "/{id}/add/event/{event_id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addTagToEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
+        tagService.addTagToEvent(id, eventId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventId.toString());
     }
 }
