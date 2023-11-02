@@ -54,9 +54,9 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(events);
     }
 
-    @GetMapping(value = "/unassigned/user/{user_id}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/recommended/user/{user_id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EventDTO>> getAllUnassignedEventsByUserId(@PathVariable("user_id") UUID userId) {
-        List<EventDTO> events = eventService.fetchAllUnassignedEventByUserId(userId);
+        List<EventDTO> events = eventService.fetchAllRecommendedEventsByUserId(userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(events);
     }

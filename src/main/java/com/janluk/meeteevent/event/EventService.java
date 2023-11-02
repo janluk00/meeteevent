@@ -4,14 +4,14 @@ import com.janluk.meeteevent.event.dto.EventCreateRequest;
 import com.janluk.meeteevent.event.dto.EventDTO;
 import com.janluk.meeteevent.event.dto.EventWithUsersDTO;
 import com.janluk.meeteevent.event.mapper.EventMapper;
+import com.janluk.meeteevent.tag.dto.TagDTO;
 import com.janluk.meeteevent.utils.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,12 +56,42 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public List<EventDTO> fetchAllUnassignedEventByUserId(UUID userId) {
+    public List<EventDTO> fetchAllUnassignedEventsByUserId(UUID userId) {
         List<Event> events = eventRepository.getAllUnassignedEventsByUserId(userId);
 
         return events.stream()
                 .map(eventMapper::toEventDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<EventDTO> fetchAllRecommendedEventsByUserId(UUID userId) {
+        List<EventDTO> userEvents = fetchAllEventsByUserId(userId);
+        List<EventDTO> unassignedEvents = fetchAllUnassignedEventsByUserId(userId);
+
+        Map<TagDTO, Long> userTagOccurrences = userEvents.stream()
+                .flatMap(event -> event.tags().stream())
+                .collect(Collectors.groupingBy(tag -> tag, Collectors.counting()));
+
+        List<EventDTO> recommendedEvents = unassignedEvents.stream()
+                .collect(Collectors.toMap(
+                        event -> event, event -> calculateCompatibility(event, userTagOccurrences)))
+                .entrySet().stream()
+                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue()))
+                .map(Map.Entry::getKey)
+                .toList();
+
+        return recommendedEvents;
+    }
+
+    private int calculateCompatibility(EventDTO event, Map<TagDTO, Long> occurencesMap) {
+        int compatibility = 0;
+
+        for (TagDTO tag : event.tags()) {
+            if (occurencesMap.containsKey(tag))
+                compatibility += occurencesMap.get(tag);
+        }
+
+        return compatibility;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
