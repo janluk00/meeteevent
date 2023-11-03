@@ -68,6 +68,8 @@ public class EventService {
         List<EventDTO> userEvents = fetchAllEventsByUserId(userId);
         List<EventDTO> unassignedEvents = fetchAllUnassignedEventsByUserId(userId);
 
+        unassignedEvents.forEach(System.out::println);
+
         Map<TagDTO, Long> userTagOccurrences = userEvents.stream()
                 .flatMap(event -> event.tags().stream())
                 .collect(Collectors.groupingBy(tag -> tag, Collectors.counting()));
@@ -92,6 +94,14 @@ public class EventService {
         }
 
         return compatibility;
+    }
+
+    public List<EventDTO> fetchAllFinishedEventsByUserId(UUID userId) {
+        List<Event> events = eventRepository.findAllFinishedEventsByUserId(userId);
+
+        return events.stream()
+                .map(eventMapper::toEventDTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

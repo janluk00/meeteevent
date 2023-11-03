@@ -61,6 +61,13 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).body(events);
     }
 
+    @GetMapping(value = "/finished/user/{user_id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EventDTO>> getAllFinishedEventsByUserId(@PathVariable("user_id") UUID userId) {
+        List<EventDTO> events = eventService.fetchAllFinishedEventsByUserId(userId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(events);
+    }
+
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> registerEvent(@Valid @RequestBody EventCreateRequest newEvent) {
         UUID eventId = eventService.createEvent(newEvent);
