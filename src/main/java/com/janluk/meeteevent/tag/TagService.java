@@ -3,12 +3,15 @@ package com.janluk.meeteevent.tag;
 import com.janluk.meeteevent.event.Event;
 import com.janluk.meeteevent.event.EventRepository;
 import com.janluk.meeteevent.tag.dto.TagCreateRequest;
+import com.janluk.meeteevent.tag.dto.TagDTO;
 import com.janluk.meeteevent.tag.mapper.TagMapper;
 import com.janluk.meeteevent.utils.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TagService {
@@ -28,6 +31,14 @@ public class TagService {
         Tag saveTag = tagMapper.toTag(tag);
 
         tagRepository.save(saveTag);
+    }
+
+    public List<TagDTO> fetchAllUnassignedEventTagsByEventId(UUID eventId) {
+        List<Tag> tags = tagRepository.findAllUnassignedEventTagsByEventId(eventId);
+
+        return tags.stream()
+                .map(tagMapper::toTagDTO)
+                .collect(Collectors.toList());
     }
 
     public void addTagToEvent(UUID tagId, UUID eventId) {

@@ -1,12 +1,14 @@
 package com.janluk.meeteevent.tag;
 
 import com.janluk.meeteevent.tag.dto.TagCreateRequest;
+import com.janluk.meeteevent.tag.dto.TagDTO;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -20,6 +22,13 @@ public class TagController {
 
     public TagController(TagService tagService) {
         this.tagService = tagService;
+    }
+
+    @GetMapping(value = "/unassigned/event/{event_id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TagDTO>> getAllUnassignedEventTagsByEventId(@PathVariable("event_id") UUID eventId) {
+        List<TagDTO> tags = tagService.fetchAllUnassignedEventTagsByEventId(eventId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(tags);
     }
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
