@@ -13,7 +13,7 @@ public interface EventRepository extends BaseEntityRepository<Event, UUID> {
 
     @Query(
             value = "select event.* from event join user_event on event.id = user_event.event_id " +
-                    "where user_event.user_id = ?1",
+                    "where user_event.user_id = ?1 and event.date > current_timestamp",
             nativeQuery = true
     )
     List<Event> findAllEventsByUserId(UUID userId);

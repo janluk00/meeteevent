@@ -49,7 +49,9 @@ public class EventService {
     }
 
     public List<EventDTO> fetchAllEventsCreatedByUserById(UUID userId) {
-        List<Event> events = eventRepository.getAllEventsCreatedByUserById(userId);
+        List<Event> events = eventRepository.getAllEventsCreatedByUserById(userId).stream()
+                .sorted(Comparator.comparing(Event::getDate).reversed())
+                .toList();
 
         return events.stream()
                 .map(eventMapper::toEventDTO)
