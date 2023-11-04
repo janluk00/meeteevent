@@ -27,6 +27,14 @@ public class TagService {
         this.tagMapper = tagMapper;
     }
 
+    public List<TagDTO> fetchAllTags() {
+        List<Tag> tags = tagRepository.findAll();
+
+        return tags.stream()
+                .map(tagMapper::toTagDTO)
+                .collect(Collectors.toList());
+    }
+
     public void createTag(TagCreateRequest tag) {
         Tag saveTag = tagMapper.toTag(tag);
 

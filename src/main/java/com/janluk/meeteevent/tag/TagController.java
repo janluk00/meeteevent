@@ -24,6 +24,13 @@ public class TagController {
         this.tagService = tagService;
     }
 
+    @GetMapping(value = "/all", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TagDTO>> getAllTags() {
+        List<TagDTO> tags = tagService.fetchAllTags();
+
+        return ResponseEntity.status(HttpStatus.OK).body(tags);
+    }
+
     @GetMapping(value = "/unassigned/event/{event_id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TagDTO>> getAllUnassignedEventTagsByEventId(@PathVariable("event_id") UUID eventId) {
         List<TagDTO> tags = tagService.fetchAllUnassignedEventTagsByEventId(eventId);

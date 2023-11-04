@@ -1,5 +1,6 @@
 package com.janluk.meeteevent.event.dto;
 import com.janluk.meeteevent.place.dto.PlaceDTO;
+import com.janluk.meeteevent.tag.dto.TagDTO;
 import com.janluk.meeteevent.user.dto.UserDTO;
 
 import java.util.Date;
@@ -14,5 +15,6 @@ public record EventWithUsersDTO(
         String description,
         PlaceDTO place,
         List<UserDTO> users,
-        UserDTO createdBy
+        UserDTO createdBy,
+        List<TagDTO> tags
 ) {}
