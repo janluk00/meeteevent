@@ -59,4 +59,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventId.toString());
     }
 
+    @DeleteMapping(value = "/{id}/event/{event_id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void unsubscribeUserFromEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
+        userService.unsubscribeUserFromEvent(id, eventId);
+    }
+
 }
