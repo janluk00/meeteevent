@@ -62,6 +62,11 @@ public class Event extends BaseEntity {
         user.getEvents().add(this);
     }
 
+    public void unsubscribeUser(User user) {
+        this.users.remove(user);
+        user.getEvents().remove(this);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
         tags.forEach(tag -> tag.getEvents().add(this));
@@ -70,6 +75,11 @@ public class Event extends BaseEntity {
     public void addTag(Tag tag) {
         this.tags.add(tag);
         tag.getEvents().add(this);
+    }
+
+    public void deleteTag(Tag tag) {
+        this.tags.remove(tag);
+        tag.getEvents().remove(this);
     }
 
     @Override

@@ -53,4 +53,15 @@ public class TagService {
         event.addTag(tag);
         eventRepository.save(event);
     }
+
+    public void deleteTagFromEvent(UUID tagId, UUID eventId) {
+        Tag tag = tagRepository.fetchById(tagId)
+                .orElseThrow(() -> new ResourceNotFound("Tag with id: " + tagId + " not found"));
+
+        Event event = eventRepository.fetchById(eventId)
+                .orElseThrow(() -> new ResourceNotFound("Event with id: " + eventId + " not found"));
+
+        event.deleteTag(tag);
+        eventRepository.save(event);
+    }
 }

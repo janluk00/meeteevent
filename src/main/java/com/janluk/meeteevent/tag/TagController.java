@@ -38,10 +38,16 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newTag);
     }
 
-    @PostMapping(value = "/{id}/add/event/{event_id}", produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}/event/{event_id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addTagToEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
         tagService.addTagToEvent(id, eventId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(eventId.toString());
+    }
+
+    @DeleteMapping(value = "/{id}/event/{event_id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteTagFromEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
+        tagService.deleteTagFromEvent(id, eventId);
     }
 }
