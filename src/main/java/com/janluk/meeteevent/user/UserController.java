@@ -18,7 +18,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    public final UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -57,6 +57,12 @@ public class UserController {
         userService.assignUserToEvent(id, eventId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(eventId.toString());
+    }
+
+    @DeleteMapping(value = "/{id}/event/{event_id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void unsubscribeUserFromEvent(@PathVariable UUID id, @PathVariable("event_id") UUID eventId) {
+        userService.unsubscribeUserFromEvent(id, eventId);
     }
 
 }

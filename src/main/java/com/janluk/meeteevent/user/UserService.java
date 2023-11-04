@@ -50,11 +50,11 @@ public class UserService {
 
     public void createUser(UserRegisterRequest user) {
         if (isLoginAlreadyTaken(user.login())){
-            throw new LoginAlreadyTaken("Login: " + user.login() + "already taken!");
+            throw new LoginAlreadyTaken("Login: " + user.login() + " already taken!");
         }
 
         if (isEmailAlreadyTaken(user.email())){
-            throw new EmailAlreadyTaken("E-mail: " + user.email() + "already taken!");
+            throw new EmailAlreadyTaken("E-mail: " + user.email() + " already taken!");
         }
 
         User saveUser = userMapper.toUser(user);
@@ -83,6 +83,8 @@ public class UserService {
         eventRepository.save(event);
     }
 
+
+
     public boolean isLoginAlreadyTaken(String login) {
         Optional<User> optionalUser = userRepository.findUserByLogin(login);
         return optionalUser.isPresent();
@@ -91,5 +93,16 @@ public class UserService {
     public boolean isEmailAlreadyTaken(String email) {
         Optional<User> optionalUser = userRepository.findUserByEmail(email);
         return optionalUser.isPresent();
+    }
+
+    public void unsubscribeUserFromEvent(UUID userId, UUID eventId) {
+        User user = userRepository.fetchById(userId)
+                .orElseThrow(() -> new ResourceNotFound("User with id: " + userId + " not found"));
+
+        Event event = eventRepository.fetchById(eventId)
+                .orElseThrow(() -> new ResourceNotFound("Event with id: " + eventId + " not found"));
+
+        event.unsubscribeUser(user);
+        eventRepository.save(event);
     }
 }
