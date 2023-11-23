@@ -13,7 +13,6 @@ public class SecurityUser implements UserDetails {
     private final User user;
 
     public SecurityUser(User user) {
-        System.out.println("SecurityUser/SecurityUser");
         this.user = user;
     }
 
@@ -23,19 +22,16 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        System.out.println("SecurityUser/getUsername");
         return user.getLogin();
     }
 
     @Override
     public String getPassword() {
-        System.out.println("SecurityUser/getPassword");
         return user.getPassword();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("SecurityUser/getAuthorities");
         return user
                 .getRoles()
                 .stream()
