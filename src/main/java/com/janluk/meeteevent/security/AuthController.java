@@ -23,7 +23,6 @@ public class AuthController {
 
     @PostMapping("/token")
     public String token(@RequestBody LoginRequest userLogin) {
-        System.out.println("authController/token");
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userLogin.login(),
                 userLogin.password())
