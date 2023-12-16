@@ -14,7 +14,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Builder
 @Entity
 @Table(name = "tag")
 @ToString

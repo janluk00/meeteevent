@@ -40,10 +40,6 @@ public class User extends BaseEntity {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "roles", nullable = false)
-    private Set<Role> roles;
-
     @ManyToMany
     @JoinTable(
             name = "user_event",

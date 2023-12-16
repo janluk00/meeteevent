@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format.sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  profiles:
+    active: dev
+
+rsa:
+  private-key: classpath:keys/private.pem # create private.pem key /resources/keys/private.pem
+  public-key: classpath:keys/public.pem # create public.pem key /resources/keys/public.pem

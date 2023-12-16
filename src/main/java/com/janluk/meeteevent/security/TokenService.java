@@ -23,15 +23,12 @@ public class TokenService {
     }
 
     public String generateToken(Authentication authentication) {
-        Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
+                .collect(Collectors.joining(""));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
-                .issuedAt(now)
-                .expiresAt(now.plus(24, ChronoUnit.HOURS))
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .claim("id", ((SecurityUser) authentication.getPrincipal()).getUser().getId())
