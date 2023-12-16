@@ -58,7 +58,6 @@ public class UserService {
         }
 
         User saveUser = userMapper.toUser(user);
-        saveUser.setRoles(Set.of(Role.USER));
 
         userRepository.save(saveUser);
     }
