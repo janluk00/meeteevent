@@ -5,7 +5,7 @@ import com.janluk.meeteevent.event.EventRepository;
 import com.janluk.meeteevent.tag.dto.TagCreateRequest;
 import com.janluk.meeteevent.tag.dto.TagDTO;
 import com.janluk.meeteevent.tag.mapper.TagMapper;
-import com.janluk.meeteevent.utils.exception.ResourceNotFound;
+import com.janluk.meeteevent.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

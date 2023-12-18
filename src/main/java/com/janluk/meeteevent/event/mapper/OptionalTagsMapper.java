@@ -3,7 +3,7 @@ package com.janluk.meeteevent.event.mapper;
 import com.janluk.meeteevent.event.mapper.annotations.TagsMapping;
 import com.janluk.meeteevent.tag.Tag;
 import com.janluk.meeteevent.tag.TagRepository;
-import com.janluk.meeteevent.utils.exception.ResourceNotFound;
+import com.janluk.meeteevent.exception.ResourceNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

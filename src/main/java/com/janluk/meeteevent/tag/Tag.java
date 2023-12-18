@@ -2,7 +2,7 @@ package com.janluk.meeteevent.tag;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.janluk.meeteevent.event.Event;
-import com.janluk.meeteevent.utils.base.BaseEntity;
+import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -5,7 +5,7 @@ import com.janluk.meeteevent.event.dto.EventDTO;
 import com.janluk.meeteevent.event.dto.EventWithUsersDTO;
 import com.janluk.meeteevent.event.mapper.EventMapper;
 import com.janluk.meeteevent.tag.dto.TagDTO;
-import com.janluk.meeteevent.utils.exception.ResourceNotFound;
+import com.janluk.meeteevent.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

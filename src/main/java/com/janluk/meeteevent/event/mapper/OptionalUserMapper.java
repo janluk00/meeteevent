@@ -3,7 +3,7 @@ package com.janluk.meeteevent.event.mapper;
 import com.janluk.meeteevent.event.mapper.annotations.UserMapping;
 import com.janluk.meeteevent.user.User;
 import com.janluk.meeteevent.user.UserRepository;
-import com.janluk.meeteevent.utils.exception.ResourceNotFound;
+import com.janluk.meeteevent.exception.ResourceNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
