@@ -82,8 +82,6 @@ public class UserService {
         eventRepository.save(event);
     }
 
-
-
     public boolean isLoginAlreadyTaken(String login) {
         Optional<User> optionalUser = userRepository.findUserByLogin(login);
         return optionalUser.isPresent();

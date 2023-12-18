@@ -15,7 +15,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @SecurityRequirement(name = "bearerAuth")
-@RequestMapping("/api/v1/tag")
+@RequestMapping("/api/v1/tags")
 public class TagController {
 
     private final TagService tagService;
