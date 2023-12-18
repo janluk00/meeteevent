@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "bearerAuth")
-@RequestMapping("/api/v1/place")
+@RequestMapping("/api/v1/places")
 public class PlaceController {
 
     public final PlaceService placeService;

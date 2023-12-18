@@ -17,7 +17,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 @SecurityRequirement(name = "bearerAuth")
-@RequestMapping("/api/v1/event")
+@RequestMapping("/api/v1/events")
 public class EventController {
 
     public final EventService eventService;
