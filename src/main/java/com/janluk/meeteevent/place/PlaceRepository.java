@@ -1,6 +1,6 @@
 package com.janluk.meeteevent.place;
 
-import com.janluk.meeteevent.utils.base.BaseEntityRepository;
+import com.janluk.meeteevent.base.BaseEntityRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;

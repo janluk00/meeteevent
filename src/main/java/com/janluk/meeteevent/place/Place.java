@@ -1,10 +1,8 @@
 package com.janluk.meeteevent.place;
 
-import com.janluk.meeteevent.utils.base.BaseEntity;
+import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Getter
 @Setter

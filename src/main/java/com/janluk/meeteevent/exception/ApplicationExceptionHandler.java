@@ -1,4 +1,4 @@
-package com.janluk.meeteevent.utils.exception;
+package com.janluk.meeteevent.exception;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;

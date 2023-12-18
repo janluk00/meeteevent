@@ -1,6 +1,6 @@
 package com.janluk.meeteevent.tag;
 
-import com.janluk.meeteevent.utils.base.BaseEntityRepository;
+import com.janluk.meeteevent.base.BaseEntityRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

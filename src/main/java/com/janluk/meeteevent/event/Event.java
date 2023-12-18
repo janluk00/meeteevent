@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.janluk.meeteevent.place.Place;
 import com.janluk.meeteevent.tag.Tag;
 import com.janluk.meeteevent.user.User;
-import com.janluk.meeteevent.utils.base.BaseEntity;
+import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

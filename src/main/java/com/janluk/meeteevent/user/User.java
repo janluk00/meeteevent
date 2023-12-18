@@ -2,7 +2,7 @@ package com.janluk.meeteevent.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.janluk.meeteevent.event.Event;
-import com.janluk.meeteevent.utils.base.BaseEntity;
+import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

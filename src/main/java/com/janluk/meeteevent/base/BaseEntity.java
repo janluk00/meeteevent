@@ -1,4 +1,4 @@
-package com.janluk.meeteevent.utils.base;
+package com.janluk.meeteevent.base;
 
 import jakarta.persistence.*;
 import org.springframework.data.domain.Persistable;
