@@ -59,7 +59,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/token",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api/v1/user")
+                                "/api/v1/users")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
