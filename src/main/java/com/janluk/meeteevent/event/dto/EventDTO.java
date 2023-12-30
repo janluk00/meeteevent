@@ -20,6 +20,4 @@ public record EventDTO(
         PlaceDTO place,
         List<TagDTO> tags,
         UserDTO createdBy
-
-
 ) {}

@@ -16,7 +16,7 @@ public interface UserRepository extends BaseEntityRepository<User, UUID> {
     Optional<User> findUserByEmail(String email);
 
     @Query(
-            value = "select users.* from meeteevent_user join user_event on meeteevent_user.id = user_event.user_id " +
+            value = "select meeteevent_user.* from meeteevent_user join user_event on meeteevent_user.id = user_event.user_id " +
                     "where user_event.event_id = ?1",
             nativeQuery = true
     )
