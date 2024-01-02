@@ -1,7 +1,6 @@
 package com.janluk.meeteevent.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.janluk.meeteevent.MeeteeventApplication;
 import com.janluk.meeteevent.config.SecurityConfig;
 import com.janluk.meeteevent.exception.ResourceNotFound;
 import com.janluk.meeteevent.security.RsaKeyProperties;
@@ -12,20 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithSecurityContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -43,7 +34,6 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(value = UserController.class)
 @Import(SecurityConfig.class)
 @EnableConfigurationProperties(value = RsaKeyProperties.class)
-@TestPropertySource({"classpath:keys/private-test.pem", "classpath:keys/public-test.pem"})
 public class UserControllerTest {
 
     @Autowired
@@ -64,9 +54,9 @@ public class UserControllerTest {
     @MockBean
     private RsaKeyProperties rsaKeyProperties;
 
-    private UserDTO first;
+    private UserDTO firstUser;
     private final UUID FIRST_ID = UUID.randomUUID();
-    private UserDTO second;
+    private UserDTO secondUser;
     private final UUID SECOND_ID = UUID.randomUUID();
     private UserRegisterRequest userRequest;
 
@@ -74,7 +64,7 @@ public class UserControllerTest {
     void setUp() {
         // TODO: create entity factory instead of this
 
-        first = UserDTO.builder()
+        firstUser = UserDTO.builder()
                 .id(FIRST_ID)
                 .name("One")
                 .surname("First")
@@ -84,7 +74,7 @@ public class UserControllerTest {
                 .phone("+48999777444")
                 .build();
 
-        second = UserDTO.builder()
+        secondUser = UserDTO.builder()
                 .id(SECOND_ID)
                 .name("Two")
                 .surname("Second")
@@ -109,7 +99,7 @@ public class UserControllerTest {
     @Test
     @WithMockUser
     void findAllUsersShouldFindTwo() throws Exception {
-        when(userService.fetchAllUsers()).thenReturn(List.of(first, second));
+        when(userService.fetchAllUsers()).thenReturn(List.of(firstUser, secondUser));
 
         mvc.perform(
                 get("/api/v1/users/all")
@@ -122,7 +112,7 @@ public class UserControllerTest {
     @Test
     @WithMockUser
     void findUserByIdShouldFindOne() throws Exception {
-        when(userService.fetchUserById(FIRST_ID)).thenReturn(first);
+        when(userService.fetchUserById(FIRST_ID)).thenReturn(firstUser);
 
         mvc.perform(
                 get("/api/v1/users/%s".formatted(FIRST_ID.toString()))

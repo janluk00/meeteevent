@@ -11,5 +11,5 @@ spring:
     active: dev
 
 rsa:
-  private-key: classpath:keys/private.pem # create private.pem key /resources/keys/private.pem
-  public-key: classpath:keys/public.pem # create public.pem key /resources/keys/public.pem
+  private-key: BASE64_PRIVATE_KEY
+  public-key: BASE64_PRIVATE_KEY
