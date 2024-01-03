@@ -59,7 +59,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/token",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api/v1/user")
+                                "/api/v1/users")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -76,13 +76,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.publicKey()).build();
+    public JwtDecoder jwtDecoder() throws Exception {
+        return NimbusJwtDecoder.withPublicKey(rsaKeyProperties.getRSAPublicKey()).build();
     }
 
     @Bean
-    public JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(rsaKeyProperties.publicKey()).privateKey(rsaKeyProperties.privateKey()).build();
+    public JwtEncoder jwtEncoder() throws Exception {
+        JWK jwk = new RSAKey.Builder(rsaKeyProperties.getRSAPublicKey())
+                .privateKey(rsaKeyProperties.getRSAPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
     }

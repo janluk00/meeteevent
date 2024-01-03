@@ -45,7 +45,6 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFound("User with id: " + id + " not found"));
 
         return userMapper.toUserDto(user);
-
     }
 
     public void createUser(UserRegisterRequest user) {

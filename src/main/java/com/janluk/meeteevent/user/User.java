@@ -40,7 +40,7 @@ public class User extends BaseEntity {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_event",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -49,7 +49,7 @@ public class User extends BaseEntity {
     @JsonManagedReference
     private Set<Event> events;
 
-    @OneToMany(targetEntity = Event.class, mappedBy = "createdBy")
+    @OneToMany(targetEntity = Event.class, mappedBy = "createdBy", cascade = CascadeType.MERGE)
     @JsonManagedReference
     private Set<Event> ownedEvents;
 

@@ -1,5 +1,6 @@
 package com.janluk.meeteevent.place;
 
+import com.janluk.meeteevent.place.dto.PlaceDTO;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class PlaceController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<Place>> getAllPlaces() {
-        List<Place> places = placeService.fetchAllPlaces();
+    public ResponseEntity<List<PlaceDTO>> getAllPlaces() {
+        List<PlaceDTO> places = placeService.fetchAllPlaces();
 
         return ResponseEntity.status(HttpStatus.OK).body(places);
     }

@@ -9,12 +9,14 @@ import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "event")
 @ToString
@@ -33,12 +35,12 @@ public class Event extends BaseEntity {
     @JoinColumn(referencedColumnName = "id", name = "place_id")
     private Place place;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "created_by")
     @JsonBackReference
     private User createdBy;
 
-    @ManyToMany(mappedBy = "events")
+    @ManyToMany(mappedBy = "events", cascade = CascadeType.MERGE)
     @JsonBackReference
     private Set<User> users = new HashSet<>();
 

@@ -12,3 +12,7 @@ spring:
     hibernate:
       ddl-auto: create
 
+rsa:
+  private-key: XXX
+  public-key: XXX
+

@@ -49,7 +49,7 @@ public class EventService {
     }
 
     public List<EventDTO> fetchAllEventsCreatedByUserById(UUID userId) {
-        List<Event> events = eventRepository.getAllEventsCreatedByUserById(userId).stream()
+        List<Event> events = eventRepository.findAllEventsCreatedByUserById(userId).stream()
                 .sorted(Comparator.comparing(Event::getDate).reversed())
                 .toList();
 
@@ -59,7 +59,7 @@ public class EventService {
     }
 
     public List<EventDTO> fetchAllUnassignedEventsByUserId(UUID userId) {
-        List<Event> events = eventRepository.getAllUnassignedEventsByUserId(userId);
+        List<Event> events = eventRepository.findAllUnassignedEventsByUserId(userId);
 
         return events.stream()
                 .map(eventMapper::toEventDTO)

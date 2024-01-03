@@ -2,8 +2,9 @@ package com.janluk.meeteevent.place.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
-
+@Builder
 public record PlaceCreateRequest(
 
         @NotBlank(message = "Event name is required!")

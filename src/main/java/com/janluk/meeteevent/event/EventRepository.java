@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-
 public interface EventRepository extends BaseEntityRepository<Event, UUID> {
 
     @Query(
@@ -22,18 +21,18 @@ public interface EventRepository extends BaseEntityRepository<Event, UUID> {
             value = "select event.* from event where event.created_by = ?1",
             nativeQuery = true
     )
-    List<Event> getAllEventsCreatedByUserById(UUID userId);
+    List<Event> findAllEventsCreatedByUserById(UUID userId);
 
     @Query(
             value = "select event.* from event left join user_event on event.id = user_event.event_id and " +
-                    "user_event.user_id = ?1 where user_event.event_id is null and event.date > current_timestamp",
+                    "user_event.user_id = ?1 where user_event.event_id is null and event.date > LOCALTIMESTAMP",
             nativeQuery = true
     )
-    List<Event> getAllUnassignedEventsByUserId(UUID userId);
+    List<Event> findAllUnassignedEventsByUserId(UUID userId);
 
     @Query(
             value = "select event.* from event join user_event on event.id = user_event.event_id " +
-                    "where user_event.user_id = ?1 and event.date < current_timestamp",
+                    "where user_event.user_id = ?1 and event.date < LOCALTIMESTAMP",
             nativeQuery = true
     )
     List<Event> findAllFinishedEventsByUserId(UUID userId);
