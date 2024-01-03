@@ -6,4 +6,4 @@ spring:
         format.sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
   profiles:
-    active: dev
+    active: prod
