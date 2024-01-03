@@ -5,11 +5,5 @@ spring:
       hibernate:
         format.sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
   profiles:
     active: dev
-
-rsa:
-  private-key: BASE64_PRIVATE_KEY
-  public-key: BASE64_PRIVATE_KEY
