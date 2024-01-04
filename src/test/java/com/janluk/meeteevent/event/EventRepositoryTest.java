@@ -11,8 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,12 +61,14 @@ public class EventRepositoryTest extends TestBase {
                 .phone("+48123123124")
                 .build();
 
+        Set<User> users = new HashSet<>(Set.of(creator, participant));
+
         actualEvent = Event.builder()
                 .date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse("2050-01-01 20:30:00.333"))
                 .description("Test Description")
                 .name("Test name")
                 .place(place1)
-                .users(Set.of(creator, participant))
+                .users(users)
                 .createdBy(creator)
                 .build();
 
@@ -76,15 +77,16 @@ public class EventRepositoryTest extends TestBase {
                 .description("Test Description2")
                 .name("Test name2")
                 .place(place2)
-                .users(Set.of(creator, participant))
+                .users(users)
                 .createdBy(creator)
                 .build();
 
-        creator.setEvents(Set.of(actualEvent, expiredEvent));
-        creator.setOwnedEvents(Set.of(actualEvent, expiredEvent));
-        participant.setEvents(Set.of(actualEvent, expiredEvent));
+        Set<Event> events = new HashSet<>(Arrays.asList(actualEvent, expiredEvent));
+        creator.setEvents(events);
+        creator.setOwnedEvents(events);
+        participant.setEvents(events);
 
-        eventRepository.saveAllAndFlush(List.of(actualEvent, expiredEvent));
+        eventRepository.saveAllAndFlush(events);
     }
 
     @Test
