@@ -19,6 +19,7 @@ public interface EventMapper {
     @Mapping(target = "users", ignore = true)
     @Mapping(target = "createdBy", qualifiedBy = UserMapping.class)
     @Mapping(target = "tags", qualifiedBy = TagsMapping.class)
+    @BeanMapping(builder = @Builder(disableBuilder = true))
     Event toEvent(EventCreateRequest event);
 
     @AfterMapping

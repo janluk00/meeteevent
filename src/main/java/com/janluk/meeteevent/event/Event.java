@@ -8,8 +8,8 @@ import com.janluk.meeteevent.user.User;
 import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Getter
@@ -20,7 +20,7 @@ import java.util.*;
 @Entity
 @Table(name = "event")
 @ToString
-public class Event extends BaseEntity {
+public class Event extends BaseEntity{
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -31,16 +31,16 @@ public class Event extends BaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(referencedColumnName = "id", name = "place_id")
     private Place place;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "created_by")
     @JsonBackReference
     private User createdBy;
 
-    @ManyToMany(mappedBy = "events", cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "events", cascade = CascadeType.PERSIST)
     @JsonBackReference
     private Set<User> users = new HashSet<>();
 
@@ -85,12 +85,20 @@ public class Event extends BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Event event = (Event) o;
+        return getId() != null && Objects.equals(getId(), event.getId());
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public final int hashCode() {
+        return this instanceof HibernateProxy
+                ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
+                : getClass().hashCode();
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,20 +62,24 @@ public class UserRepositoryTest extends TestBase {
                 .phone("+48123123124")
                 .build();
 
+        Set<User> users = new HashSet<>(Set.of(firstUser, secondUser));
+
         event = Event.builder()
                 .date(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse("2050-01-01 20:30:00.333"))
                 .description("Test Description")
                 .name("Test name")
                 .place(place1)
-                .users(Set.of(firstUser, secondUser))
+                .users(users)
                 .createdBy(firstUser)
                 .build();
 
-        firstUser.setEvents(Set.of(event));
-        firstUser.setOwnedEvents(Set.of(event));
-        secondUser.setEvents(Set.of(event));
+        Set<Event> eventSet = new HashSet<>(Set.of(event));
 
-        userRepository.saveAllAndFlush(List.of(firstUser, secondUser));
+        firstUser.setEvents(eventSet);
+        firstUser.setOwnedEvents(eventSet);
+        secondUser.setEvents(eventSet);
+
+        userRepository.saveAll(users);
     }
 
     @Test

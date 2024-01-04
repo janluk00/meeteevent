@@ -8,9 +8,11 @@ import java.util.UUID;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Persistable<UUID> {
+
     @Id
-    @Column(name = "id")
-    protected UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name="id", insertable = false, updatable = false, nullable = false)
+    protected UUID id;
 
     @Override
     public UUID getId() {
@@ -27,7 +29,7 @@ public abstract class BaseEntity implements Persistable<UUID> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BaseEntity that = (BaseEntity) o;
-        return id.equals(that.id);
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override

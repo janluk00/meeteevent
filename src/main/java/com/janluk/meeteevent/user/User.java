@@ -5,7 +5,9 @@ import com.janluk.meeteevent.event.Event;
 import com.janluk.meeteevent.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -40,7 +42,7 @@ public class User extends BaseEntity {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_event",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -49,7 +51,7 @@ public class User extends BaseEntity {
     @JsonManagedReference
     private Set<Event> events;
 
-    @OneToMany(targetEntity = Event.class, mappedBy = "createdBy", cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = Event.class, mappedBy = "createdBy")
     @JsonManagedReference
     private Set<Event> ownedEvents;
 
@@ -64,12 +66,20 @@ public class User extends BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public final int hashCode() {
+        return this instanceof HibernateProxy
+                ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
+                : getClass().hashCode();
     }
 }
