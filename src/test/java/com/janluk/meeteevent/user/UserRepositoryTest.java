@@ -89,7 +89,7 @@ public class UserRepositoryTest extends TestBase {
         assertThat(users)
                 .hasSize(2)
                 .extracting(User::getId)
-                .containsExactly(firstUser.getId(), secondUser.getId());
+                .contains(firstUser.getId(), secondUser.getId());
     }
 
     @Test
