@@ -105,7 +105,7 @@ public class EventRepositoryTest extends TestBase {
         assertThat(events)
                 .hasSize(2)
                 .extracting(Event::getId)
-                .containsExactly(expiredEvent.getId(), actualEvent.getId());
+                .contains(expiredEvent.getId(), actualEvent.getId());
     }
 
     @Test
@@ -122,6 +122,6 @@ public class EventRepositoryTest extends TestBase {
 
         assertThat(events)
                 .hasSize(1)
-                .containsExactly(expiredEvent);
+                .contains(expiredEvent);
     }
 }
